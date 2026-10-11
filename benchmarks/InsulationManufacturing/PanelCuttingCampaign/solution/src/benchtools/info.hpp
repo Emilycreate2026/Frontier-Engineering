@@ -1,0 +1,188 @@
+#pragma once
+
+#include <chrono>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <mutex>
+#include <iomanip>
+
+#include <nlohmann/json.hpp>
+
+/**
+ * Logger is not thread safe, each thread should have its own Logger.
+ * Output is thread safe, it should be shared between threads.
+ */
+
+#define VER(info, message) \
+    if (info.output->verbose) { \
+        info.output->mutex_cout.lock(); \
+        std::cout << message; \
+        info.output->mutex_cout.unlock(); \
+    }
+
+#define PUT(info, cat, key, value) \
+    info.output->mutex_j.lock(); \
+    info.output->j[cat][key] = value; \
+    info.output->mutex_j.unlock();
+
+#ifdef NDEBUG
+
+#define DBG(x)
+#define LOG(info, message) {  }
+#define LOG_FOLD_START(info, message) {  }
+#define LOG_FOLD_END(info, message) {  }
+#define LOG_FOLD(info, message) {  }
+#define LOG_ON(info) {  }
+#define LOG_OFF(info) {  }
+
+#else
+
+#define DBG(x) x
+#define LOG(info, message) \
+    { \
+        if (info.logger->on && info.logger->level <= info.logger->level_max) { \
+            if (info.logger->logfile.is_open()) \
+                info.logger->logfile << message; \
+            if (info.logger->log2stderr) \
+                std::cerr << message; \
+        } \
+    }
+#define LOG_FOLD_START(info, message) \
+    { \
+        info.logger->level++; \
+        LOG(info, "{{{ " << message); \
+    }
+#define LOG_FOLD_END(info, message) \
+    { \
+        LOG(info, message << " }}}" << std::endl); \
+        info.logger->level--; \
+    }
+#define LOG_FOLD(info, message) \
+    { \
+        info.logger->level++; \
+        LOG(info, "{{{ " << message << " }}}" << std::endl); \
+        info.logger->level--; \
+    }
+#define LOG_ON(info)  { info.logger->on = true; }
+#define LOG_OFF(info) { info.logger->on = false; }
+
+#endif
+
+namespace benchtools
+{
+
+struct Logger
+{
+    bool on = true;
+    bool log2stderr = false;
+    std::ofstream logfile;
+    std::string logfilename;
+    int level = 0;
+    int level_max = 999;
+};
+
+struct Output
+{
+    nlohmann::json j;
+    bool onlywriteattheend = true;
+    std::string inifile  = "";
+    std::string certfile = "";
+    std::mutex mutex_j;
+    std::mutex mutex_cout;
+    std::mutex mutex_sol;
+    bool verbose = false;
+    int sol_number = 0;
+    int bnd_number = 0;
+};
+
+struct Info
+{
+
+public:
+
+    Info()
+    {
+        logger = std::shared_ptr<Logger>(new Logger());
+        output = std::shared_ptr<Output>(new Output());
+        start = std::chrono::high_resolution_clock::now();
+    }
+
+    Info& set_verbose(bool verbose) { output->verbose = verbose; return *this; }
+    Info& set_outputfile(std::string outputfile) { output->inifile = outputfile; return *this; }
+    Info& set_certfile(std::string certfile) { output->certfile = certfile; return *this; }
+    Info& set_onlywriteattheend(bool b) { output->onlywriteattheend = b; return *this; }
+    Info& set_log2stderr(bool log2stderr) { logger->log2stderr = log2stderr; return *this; }
+    Info& set_loglevelmax(int loglevelmax) { logger->level_max = loglevelmax; return *this; }
+    Info& set_timelimit(double t) { timelimit = t; return *this; }
+    Info& set_logfile(std::string logfile)
+    {
+        logger->logfilename = logfile;
+        if (logfile == "")
+            return *this;
+        if (logger->logfile.is_open())
+            logger->logfile.close();
+        logger->logfile.open(logfile);
+        return *this;
+    }
+
+    Info(const Info& info, bool keep_output, std::string keep_logger)
+    {
+        if (keep_logger == "") {
+            logger = std::shared_ptr<Logger>(info.logger);
+        } else {
+            std::string logfile = info.logger->logfilename;
+            if (logfile != "") {
+                for (int i=logfile.length()-1; i>=0; --i) {
+                    if (logfile[i] == '.') {
+                        logfile.insert(i, "_" + keep_logger);
+                        break;
+                    }
+                }
+            }
+            logger = std::shared_ptr<Logger>(new Logger());
+            set_logfile(logfile);
+        }
+        output = (!keep_output)? std::shared_ptr<Output>(new Output()):
+                                 std::shared_ptr<Output>(info.output);
+        start = info.start;
+        timelimit = info.timelimit;
+    }
+
+    double elapsed_time() const
+    {
+        std::chrono::high_resolution_clock::time_point end
+            = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> time_span
+            = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+        return time_span.count();
+    }
+
+    double remaining_time() const { return std::max(0.0, timelimit - elapsed_time()); }
+    bool check_time() const { return ++work_checks <= work_limit; }
+    void reset_time() { start = std::chrono::high_resolution_clock::now(); }
+
+    void write_ini() const { write_ini(output->inifile); }
+    void write_ini(std::string filename) const
+    {
+        if (filename != "") {
+            std::ofstream o(filename);
+            o << std::setw(4) << output->j << std::endl;
+        }
+    }
+
+    /**
+     * Attributes
+     */
+
+    std::shared_ptr<Logger> logger = NULL;
+    std::shared_ptr<Output> output = NULL;
+    std::chrono::high_resolution_clock::time_point start;
+    double timelimit = std::numeric_limits<double>::infinity();
+    mutable unsigned long long work_checks = 0;
+    unsigned long long work_limit = std::getenv("SOLVER_NODE_BUDGET") ? std::stoull(std::getenv("SOLVER_NODE_BUDGET")) : 250000ULL;
+};
+
+}
+

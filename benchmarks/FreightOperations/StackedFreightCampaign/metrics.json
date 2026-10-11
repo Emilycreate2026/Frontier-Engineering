@@ -1,0 +1,12 @@
+{
+  "cases": {
+    "campaign": {
+      "inventory_cost": 647793.0,
+      "items": 52264,
+      "objective": 2457693.0,
+      "transportation_cost": 1809900.0,
+      "valid": true
+    }
+  },
+  "valid": true
+}

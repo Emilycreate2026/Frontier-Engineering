@@ -1,0 +1,11 @@
+{
+  "upstream": "librallu/J28_submission_euro_roadef_2018",
+  "changes": [
+    "Algorithms execute sequentially in the original listed order",
+    "Time checks become fixed deterministic node/work checks per algorithm",
+    "DP search receives the same deterministic check"
+  ],
+  "default_node_budget_per_algorithm": 250000,
+  "json_headers": "vendored from /opt/conda/include/nlohmann; original license comments retained",
+  "verified": false
+}

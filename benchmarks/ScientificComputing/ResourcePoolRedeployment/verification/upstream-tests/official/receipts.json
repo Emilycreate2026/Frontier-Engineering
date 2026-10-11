@@ -1,0 +1,12 @@
+[
+  {
+    "url": "https://www.roadef.org/challenge/2012/files/solution_checker/solution_checker.cc",
+    "name": "solution_checker.cc",
+    "sha256": "069038b8a13e62286b77c3ddad074bd4d648db893bcb542d0f906b03f1d56837"
+  },
+  {
+    "url": "https://www.roadef.org/challenge/2012/files/solution_checker/solution_checker_run.cc",
+    "name": "solution_checker_run.cc",
+    "sha256": "70aa0fab5e65710d7238d0d096d657e3f51e01f60e64bd3b95db52869655c432"
+  }
+]

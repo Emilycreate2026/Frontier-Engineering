@@ -1,0 +1,4 @@
+Source package: hard-co-ten-20261006/tasks/panel-cutting-campaign.
+Origin: competition-derived fixture retained in the local authoring archive.
+Public input redistribution and third-party solver license must be reviewed before submission.
+No private credentials, hidden references, or stored answer files are included.
