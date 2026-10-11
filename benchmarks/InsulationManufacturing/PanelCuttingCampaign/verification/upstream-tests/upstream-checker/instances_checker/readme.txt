@@ -1,7 +1,7 @@
 What Is This?
 -------------
 
-This set of batchs and defects is provided by Saint-Gobain Glass France for the ROADEF/EURO Challenge 2018, and is intended to provide working examples,
+This set of batchs and defects is provided by the benchmark authoring fixture for the two-dimensional cutting challenge, and is intended to provide working examples,
 in order to help developers to provide them a way to test their algorithms.
 
 User's generated solution instances should be placed in this directory as well.

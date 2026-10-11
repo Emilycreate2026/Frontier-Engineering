@@ -1,15 +1,14 @@
 # Optimize a complete multi-truck loading plan
-Read the complete public competition instance in /app/data/campaign:
+Read the complete synthetic instance in /app/data/campaign:
 input_items.csv, input_trucks.csv, input_parameters.csv. These are semicolon-separated
 CSV files; numeric decimal commas may occur. Do not modify these input files.
-The full public problem specification is /app/RULES.txt (also RULES.pdf). Read it,
+The full problem specification is /app/RULES.txt (also RULES.pdf). Read it,
 including constraints I1-I5, S1-S7, P1-P4 and all weight/axle restrictions, before coding.
-This is the full ROADEF 2022 loading problem, not just a 2D packing subproblem.
+This is the full multi-stage loading problem, not just a 2D packing subproblem.
 Deliver every input item quantity by assigning items to compatible stacks and trucks;
 respect delivery windows, route/supplier/plant compatibility, stackability and nesting,
 orientation, dimensions, nonoverlap, unloading order, vehicle weight and axle loads.
-Do not omit items. The original public instance and source attribution are retained
-for this diagnostic pilot; it is not a finalized transformed benchmark release.
+Do not omit items. The the instance is generated for this benchmark and is included solely for reproducible evaluation.
 
 Write three semicolon-separated CSV files under /app/results, with one header row:
 output_items.csv:

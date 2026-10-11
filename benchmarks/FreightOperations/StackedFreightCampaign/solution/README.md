@@ -1,4 +1,4 @@
-# ROADEF/EURO 2022 truck loading: deterministic feasibility solver
+# multi-stage truck loading: deterministic feasibility solver
 
 Run: `bash /app/submission/solve.sh`. It compiles `solver.cpp` into a temporary directory under /tmp,
 which is deleted afterwards. It reads `/app/data/campaign/input_*.csv` and writes

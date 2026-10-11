@@ -1,8 +1,8 @@
 Note: the algorithm has been re-implemented in [a new package](https://github.com/fontanf/packingsolver) which solves a large variety of additional packing problems. Please refer to it for up-to-date results.
 
-# ROADEF/EURO 2018 challenge
+# two-dimensional cutting challenge
 
-A branch-and-bound algorithm for the ROADEF/EURO 2018 challenge 2D-packing problem. Winner of the final phase.
+A branch-and-bound algorithm for the two-dimensional cutting challenge 2D-packing problem. Winner of the final phase.
 
 Authors: [Luc Libralesso](https://github.com/librallu), Florian Fontan
 
