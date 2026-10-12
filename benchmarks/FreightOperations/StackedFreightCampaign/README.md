@@ -36,7 +36,7 @@ A Docker definition is provided under `verification/docker`; build from the
 repository root and select this file with `docker build -f`. The host must allow
 nested user namespaces for bubblewrap. Container execution is not claimed until tested.
 
-Source attribution and transformation details are in [references/source.md](references/source.md).
+Input and processing details are in [references/source.md](references/source.md). Third-party attribution and reuse information are in [references/THIRD_PARTY_NOTICES.md](references/THIRD_PARTY_NOTICES.md).
 
 ## Verified baseline
 

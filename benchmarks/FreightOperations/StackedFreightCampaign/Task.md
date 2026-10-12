@@ -1,14 +1,14 @@
 # Optimize a complete multi-truck loading plan
-Read the complete public instance in environment/data/campaign:
+Read the supplied campaign instance in environment/data/campaign:
 input_items.csv, input_trucks.csv, input_parameters.csv. These are semicolon-separated
 CSV files; numeric decimal commas may occur. Do not modify these input files.
-The full public problem specification is environment/RULES.txt (also RULES.pdf). Read it,
+The complete constraint specification is environment/RULES.txt (also RULES.pdf). Read it,
 including constraints I1-I5, S1-S7, P1-P4 and all weight/axle restrictions, before coding.
 This includes all of the documented loading and routing constraints.
 Deliver every input item quantity by assigning items to compatible stacks and trucks;
 respect delivery windows, route/supplier/plant compatibility, stackability and nesting,
 orientation, dimensions, nonoverlap, unloading order, vehicle weight and axle loads.
-Do not omit items. Source and reuse information is in references/source.md.
+Do not omit items.
 
 Write three semicolon-separated CSV files under the output directory supplied on the command line, with one header row:
 output_items.csv:
@@ -25,11 +25,11 @@ Coordinates/dimensions are integer millimeters. Loaded length is integer millime
 weight/axle loads are kg, and volume is cubic meters. Numerical fields can use decimal
 points or commas. Compute the truck summaries consistently with the specified formulas.
 A planned truck keeps its input identifier P<suffix>. An extra copy uses Q<suffix>_<unique-copy-number>,
-referring to the matching P<suffix>. Extra trucks are permitted by the original rules;
+referring to the matching P<suffix>. Extra trucks are permitted by the supplied rules;
 their transportation and inventory costs count toward the objective.
 
-The official Java checker 1.11.4 validates the full output. Its constraint errors
-are checked by the official verifier. Minimize the total transportation plus inventory cost.
+The bundled Java checker validates the full output. The evaluator rejects
+outputs with constraint errors. Minimize the total transportation plus inventory cost.
 No saved solution CSVs or commercial solver is supplied.
 
 
