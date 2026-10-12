@@ -12,6 +12,25 @@ Use one CPU and 16 GiB RAM. Candidate generation has a 900-second cap including
 compilation. No commercial solvers, external accounts, model keys or network
 access are needed. The initial program regenerates outputs from inputs.
 
+## One-time dependency setup
+
+Before running either validation command, execute from this task directory:
+
+```bash
+python scripts/setup_dependencies.py
+python -m pip install -r verification/requirements.txt
+```
+
+The offline source archive contains nlohmann/json 3.11.2 and simdjson 0.9.2
+at the immutable upstream commits listed in `references/dependencies.json`.
+Setup verifies both the archive SHA-256 and every source file's hash. No network
+is used by this setup step or candidate execution. Extracted files are ignored
+by Git but copied as read-only baseline assets by Frontier Eval. Source licenses
+remain in the task and dependency headers. The archive contains only unchanged
+third-party library files, not task logic or saved solutions; it avoids exceeding
+GitHub's 20,000-line pull-request diff limit. Remaining baseline source is its
+compiler-resolved dependency closure.
+
 ## Validation
 
 From this task directory:
@@ -42,7 +61,7 @@ Source attribution and transformation details are in [references/source.md](refe
 
 Two fresh generations (direct evaluator and unified zero-iteration run) passed
 with identical output hashes and raw objective 2743.5078649237475.
-The unified evaluation took 45.8 seconds in the validation environment.
+The unified evaluation took 43.44 seconds in the validation environment.
 See `references/validation.json`. The driver ran in a separate virtual environment;
 `task.runtime.python_path=python3` selected the task runtime with NumPy 2.2.6.
 No model API call or new optimization experiment was made.
