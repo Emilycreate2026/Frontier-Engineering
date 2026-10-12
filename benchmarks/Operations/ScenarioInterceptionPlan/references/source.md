@@ -1,5 +1,7 @@
-# Source and scope
+# Inputs and processing
 
-Public PACE 2025 heuristic_003 hitting-set instance; bijective option renaming retains all incidence rows, multiplicities and unit costs. Baseline source and license are retained under solution/src. The assay scenario is an engineering interpretation, not evidence of measured clinical or operational incidents.
+The JSON campaign specifies assay options and the incident scenarios covered by each option. Identifier mappings preserve incidence rows, multiplicities and unit costs. The verifier independently checks complete coverage and counts the selected assays. The assay terminology is a task interpretation rather than a claim of measured clinical incidents.
 
-These public fixtures are not customer logs or newly generated independent instances. Renaming does not eliminate prior public exposure. Published score evidence is validation of the baseline, not a model-hardness or global-optimality claim.
+Baseline outputs are regenerated from inputs. Validation metrics demonstrate execution and scoring reproducibility; they do not establish global optimality or model difficulty.
+
+Data and software attribution, reuse information and license locations are recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
