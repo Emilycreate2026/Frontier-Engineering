@@ -1,7 +1,7 @@
-# Source and scope
+# Inputs and processing
 
-Public ROADEF/EURO 2020 A_08 and A_13 maintenance instances; bijective identifier changes retain coefficients and constraints. Baseline uses the S19 search implementation and bundled optimization libraries; licenses are preserved under solution/src. The original checker is retained with its author notice.
+The two JSON campaigns specify maintenance operations, resource capacities, scheduling restrictions and scenario risk coefficients. Identifier mappings preserve the numeric coefficients and constraints. The verifier independently checks each schedule and computes the summed mean and quantile-excess risk objective.
 
-These public fixtures are not customer logs or newly generated independent instances. Renaming does not eliminate prior public exposure. Published score evidence is validation of the baseline, not a model-hardness or global-optimality claim.
+Baseline outputs are regenerated from inputs. Validation metrics demonstrate execution and scoring reproducibility; they do not establish global optimality or model difficulty.
 
-Large nlohmann/json and simdjson dependencies are installed from an included offline source archive with archive and per-file SHA-256 verification; immutable upstream commits and source URLs remain in dependencies.json. Their content is byte-identical to the original vendored files. The remaining baseline source retains only the compilation dependency closure and associated licenses.
+Data and software attribution, reuse information and license locations are recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
